@@ -11,7 +11,14 @@
     ></script>
     <title>Dark Mode toggle</title>
   </head>
-  <body class="antialiased" x-data="{'darkMode': true}">
+  <!-- x-init Armazena dados no localStorage e seta automaticamente a preferência anterior do usuário -->
+  <body
+    class="antialiased"
+    x-data="{'darkMode': false}"
+    x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+  $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));"
+  >
+    <!-- Verifica se a variavel criada no body é verdadeira ou falsa -->
     <div :class="{'dark': darkMode === true}">
       <!-- Background -->
       <div
@@ -33,13 +40,20 @@
               ></div>
             </label>
             <span class="text-sm text-gray-400 dark:text-white">Dark</span>
-            <input id="toggle" type="checkbox" class="hidden" />
+            <!-- Input que verifica a mudança na label -->
+            <input
+              id="toggle"
+              type="checkbox"
+              class="hidden"
+              :value="darkMode"
+              @change="darkMode = !darkMode"
+            />
           </div>
           <!-- Teste -->
           <div
-            class="flex flex-col w-96 h-96 bg-gray-300 text-gray-800 dark:bg-gray-600 dark:text-gray-100 mt-20 rounded-xl pl-2"
+            class="flex flex-col w-96 h-96 bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-100 mt-20 rounded-xl pl-2"
           >
-            <h1 class="text-lg font-semibold">Dark mode toggle</h1>
+            <h1 class="text-lg font-semibold">Dark mode toggle teste</h1>
             <p class="text-md">LIGHT/DARK</p>
           </div>
         </div>
